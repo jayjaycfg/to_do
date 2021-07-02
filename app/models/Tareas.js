@@ -41,7 +41,8 @@ class Tareas{
                 .map((tarea,i)=>{
                     const { desc, completadoEn} = tarea;
                     const idx = `${i+1}.`.green;
-                    console.log(`${idx} ${desc} :: ${completadoEn}`);
+                    const estado = `${completadoEn}`.green;
+                    console.log(`${idx} ${desc} :: ${estado}`);
                 });
         return;
         }
@@ -57,6 +58,20 @@ class Tareas{
     borrarTarea =(id)=>{
         delete this._listado[id];
         console.log('Tarea borrada');
+    };
+
+    toggleCompletadas =(ids=[])=>{
+            ids.map(id=>{
+                const tarea = this._listado[id];
+                if(!tarea.completadoEn){
+                    tarea.completadoEn = new Date().toISOString();
+                }
+            });
+            this.listadoArr.map(tarea=>{
+                if( !ids.includes(tarea.id)){
+                    this._listado[tarea.id].completadoEn = null;
+                }
+            });
     };
 
 }
